@@ -1,9 +1,9 @@
 import React from 'react';
-import logo from './logo.svg';
 import {ImageDropZone, ShowImage} from './Image';
 import './App.css';
+import './App.css';
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">

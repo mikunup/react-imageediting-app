@@ -5,9 +5,9 @@ import './Image.css';
  * convertarrayBufferToBase64 convert buffer to base64.
  * @param {Uint8Array} buffer
  */
-const convertarrayBufferToBase64 = (buffer) => {
-    let binary = '';
-    const len = buffer.byteLength;
+const convertarrayBufferToBase64 = (buffer: Uint8Array) => {
+    let binary: string = '';
+    const len: number = buffer.byteLength;
     for (let i = 0; i < len; i++) {
         binary += String.fromCharCode(buffer[i]);
     }
@@ -17,8 +17,8 @@ const convertarrayBufferToBase64 = (buffer) => {
 // observeDragAndDropImage observe ImageInput Element And Render the image.
 // TODO: Must divide observe imageInput and render image.
 const observeDragAndDropImage = () => {
-    const imageEle = document.getElementById('dropZone')
-    const imageInput = document.getElementById('dropImage')
+    const imageEle: HTMLElement = (document.getElementById('dropZone') as HTMLElement)
+    const imageInput: HTMLInputElement = (document.getElementById('dropImage') as HTMLInputElement)
 
     imageInput.addEventListener('change', () => {
         // TODO
@@ -26,22 +26,23 @@ const observeDragAndDropImage = () => {
 
     imageEle.addEventListener('drop', (e) => {
         e.preventDefault();
-        const files = e.type === 'change' ? e.target.files : e.dataTransfer.files;
+        // TODO any types
+        const files: any = e.type === 'change' ? (e.target as any).files : (e.dataTransfer as any).files;
         const reader = new FileReader()
         reader.readAsArrayBuffer(files[0]);
 
         reader.onload = () => {
-            const buffer = new Uint8Array(reader.result);
+            const buffer = new Uint8Array((reader.result as ArrayBuffer));
             const base64 = convertarrayBufferToBase64(buffer);
 
-            const imageEle = document.getElementById('showImage')
+            const imageEle: HTMLImageElement = (document.getElementById('showImage') as HTMLImageElement)
             imageEle.src = 'data:image/png;base64,' + base64;
         }
     });
 }
 
 // ImageDropZone is Render Element that draganddrop image-file.
-export const ImageDropZone = () => {
+export const ImageDropZone: React.FC = () => {
     useEffect(() => {
         observeDragAndDropImage();
     });
@@ -53,7 +54,7 @@ export const ImageDropZone = () => {
 }
 
 // ShowImage is Render Element that show the image.
-export const ShowImage = () => {
+export const ShowImage: React.FC = () => {
     return (
         <img src='' id="showImage" />
     )
